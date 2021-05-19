@@ -10,9 +10,11 @@ const anecdotes = [
 ];
 
 const Anecdotes = (props) => {
-  const points = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  const points = Array(anecdotes.length).fill(0);
+
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(points);
+  const [max, setMax] = useState(0);
 
   const generate = () => {
     let random = 0;
@@ -29,25 +31,24 @@ const Anecdotes = (props) => {
   };
 
   const countVotes = () => {
-    const copy = { ...votes };
+    const copy = [...votes];
     copy[selected] += 1;
     setVotes(copy);
+    let maxVote = maxVotes();
+    setMax(maxVote);
   };
 
   const maxVotes = () => {
-    let num = votes[0];
-    let prop = 0;
-    for (let max in votes) {
-      if (votes[max] > num) {
-        num = votes[max];
-        prop = max;
+    let el = votes[0];
+    let pos = 0;
+    for (let i = 0; i < votes.length; i++) {
+      if (votes[i] > el) {
+        el = votes[i];
+        pos = i;
       }
     }
-
-    return { num, prop };
+    return pos;
   };
-
-  let result = maxVotes();
 
   return (
     <>
@@ -57,9 +58,13 @@ const Anecdotes = (props) => {
       </div>
       <button onClick={countVotes}>vote</button>
       <button onClick={aleatorios}>next anecdote</button>
+
       <div>
         <h2>Anecdote with most votes</h2>
-        {result.prop}
+        <div>{anecdotes[max]}</div>
+        <div>
+          <span>has {votes[max]} votes</span>
+        </div>
       </div>
     </>
   );

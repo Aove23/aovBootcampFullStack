@@ -6,7 +6,7 @@ import Anecdotes from "./Anecdotes";
 const App = () => {
   return (
     <>
-      <h2>Couse Info</h2>
+      <h2>Course Info</h2>
       <CourseInfo />
       <h2>Unicafe App</h2>
       <Unicafe />
